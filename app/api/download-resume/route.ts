@@ -1,34 +1,19 @@
 import { NextResponse } from "next/server";
-import chromium from "@sparticuz/chromium-min";
-import puppeteer from "puppeteer-core";
-import path from "path";
+import puppeteer from "puppeteer";
 
 export async function GET() {
   try {
-    const executablePath = path.join(
-      process.cwd(),
-      "chrome",
-    //   "win64-130.0.6723.91",
-    //   "chrome-win64",
-    //   "chrome.exe"
-    );
     const browser = await puppeteer.launch({
-      ignoreDefaultArgs: ["--disable-extensions"],
-      args: [
-        ...chromium.args, 
-        "--hide-scrollbars", 
-        "--disable-web-security", 
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-      ],
-      defaultViewport: chromium.defaultViewport,
-      executablePath: executablePath,
-      headless: false,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      defaultViewport: { width: 1280, height: 800 },
+      headless: true,
     });
+
     const page = await browser.newPage();
 
     // Set the HTML content to convert into a PDF
-    await page.setContent(`
+    await page.setContent(
+      `
         <html>
         <head>
             <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -110,12 +95,10 @@ export async function GET() {
             </div>
         </body>
         </html>
-    `,{
-        waitUntil: 'domcontentloaded'
-      });
+    `);
 
     // Generate PDF with Puppeteer
-    const pdfBuffer = await page.pdf({ format: "A4", timeout: 30000 });
+    const pdfBuffer = await page.pdf({ format: "A4" });
 
     await browser.close();
 

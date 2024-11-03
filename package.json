@@ -13,7 +13,6 @@
     "@aws-sdk/client-ses": "^3.679.0",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.1.5",
-    "@sparticuz/chromium-min": "^130.0.0",
     "aws-sdk": "^2.1691.0",
     "axios": "^1.7.7",
     "clsx": "^2.1.1",
