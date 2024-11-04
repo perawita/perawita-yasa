@@ -3,10 +3,8 @@ import puppeteer from "puppeteer";
 
 export async function GET() {
   try {
-    const browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      defaultViewport: { width: 1280, height: 800 },
-      headless: true,
+    const browser = await puppeteer.connect({
+        browserURL: 'ws://127.0.0.1:9222/devtools/browser/944f91ee-3df5-4f2a-bc87-0fbcde8ccc85'
     });
 
     const page = await browser.newPage();
@@ -98,7 +96,7 @@ export async function GET() {
     `);
 
     // Generate PDF with Puppeteer
-    const pdfBuffer = await page.pdf({ format: "A4" });
+    const pdfBuffer = await page.pdf({ format: "a4" });
 
     await browser.close();
 
