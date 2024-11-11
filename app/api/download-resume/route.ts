@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
-import chromium  from "chrome-aws-lambda";
+import {chromium} from "playwright";
 
 export async function GET() {
   try {
     // Menentukan opsi peluncuran browser dengan chrome-aws-lambda
-    const browser = await chromium.puppeteer.launch({
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
-        executablePath: await chromium.executablePath,
-        headless: true,
-      });
+    const browser = await chromium.launch({
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      headless: true,
+    });
 
     const page = await browser.newPage();
 
@@ -97,17 +96,16 @@ export async function GET() {
       </html>
     `);
 
-    const pdfBuffer = await page.pdf({ format: 'a4'});
+    const pdfBuffer = await page.pdf({ format: "a4" });
 
     // Mengembalikan buffer sebagai file PDF dalam response
-
     return new Response(pdfBuffer, {
-        status: 200,
-        headers: {
-          "Content-Type": "application/pdf",
-          "Content-Disposition": 'attachment; filename="resume.pdf"',
-        },
-      });
+      status: 200,
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": 'attachment; filename="resume.pdf"',
+      },
+    });
   } catch (error) {
     console.error("Error generating PDF:", error);
     return NextResponse.json({ error: "Error: " + error }, { status: 500 });
