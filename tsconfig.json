@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "sourceMap": false,
     "lib": [
       "dom",
       "dom.iterable",
@@ -32,9 +31,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "pages/**/*",
-    "@types/**/*"
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
