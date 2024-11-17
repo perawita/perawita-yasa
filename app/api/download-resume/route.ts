@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
-import {chromium} from "playwright";
+import puppeteer from "puppeteer";
 
 export async function GET() {
   try {
-    const browser = await chromium.launch({
-    });
+    const browser = await puppeteer.launch();
 
     const page = await browser.newPage();
 
