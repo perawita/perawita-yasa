@@ -3,102 +3,91 @@ import {chromium} from "playwright";
 
 export async function GET() {
   try {
-    // Menentukan opsi peluncuran browser dengan chrome-aws-lambda
     const browser = await chromium.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      headless: true,
     });
 
     const page = await browser.newPage();
 
-    // Template HTML yang ingin diubah menjadi PDF
+    // Konten HTML untuk diubah menjadi PDF
     await page.setContent(`
       <html>
         <head>
-            <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+          <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
         </head>
-        <body>
-            <div class="w-full h-full overflow-hidden rounded-lg shadow-lg bg-white mb-4">
-                <div class="py-5 w-[100%] top-6 left-[5%] text-black px-4 md:px-6 lg:px-8">
-                    <h1 class="text-xl md:text-2xl lg:text-3xl font-bold text-left">Ida Bagus Perawita Yasa</h1>
-                    <p class="text-base md:text-lg text-left mt-2">+62-898-3220-569 • perawitayasa@gmail.com</p>
-                    <p class="text-base md:text-lg text-left">West Pemenang Pemenang Barat Pemenang North Lombok Regency West
-                        Nusa Tenggara</p>
+        <body class="bg-gray-100">
+          <div class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+            <header class="border-b pb-4 mb-4">
+              <h1 class="text-3xl font-bold">Ida Bagus Perawita Yasa</h1>
+              <p class="text-gray-600">+62-898-3220-569 • perawitayasa@gmail.com</p>
+              <p class="text-gray-600">West Pemenang, North Lombok Regency, West Nusa Tenggara</p>
+            </header>
 
-                    <hr class="my-5 border-black" />
+            <section class="mb-6">
+              <h2 class="text-xl font-bold mb-2">Full Stack Web Development</h2>
+              <p class="text-gray-700">
+                As a freelance web developer experienced in both frontend and backend development, I specialize in
+                creating responsive designs while solving complex business logic.
+              </p>
+            </section>
 
-                    <h2 class="text-lg md:text-xl font-bold mb-2">Full Stack Web Development</h2>
-                    <p class="text-base md:text-lg leading-relaxed">
-                        As a freelance web developer experienced in both frontend and backend development, I specialize in
-                        creating responsive designs while also solving complex business logic. You can rely on me to find
-                        efficient and scalable solutions for your business needs.
-                    </p>
+            <section class="mb-6">
+              <h2 class="text-xl font-bold mb-2">Skill and Tools</h2>
+              <div class="grid grid-cols-3 gap-4">
+                <ul>
+                  <li>HTML</li>
+                  <li>CSS</li>
+                  <li>JavaScript</li>
+                  <li>MySQL</li>
+                </ul>
+                <ul>
+                  <li>Laravel</li>
+                  <li>Next.js</li>
+                  <li>Bootstrap 5</li>
+                </ul>
+                <ul>
+                  <li>Tailwind</li>
+                  <li>VS Code</li>
+                  <li>Git</li>
+                </ul>
+              </div>
+            </section>
 
-                    <hr class="my-5 border-black" />
+            <section class="mb-6">
+              <h2 class="text-xl font-bold mb-2">Experience</h2>
+              <p><strong>Freelance Web Development</strong> (Jan 2024 - Present)</p>
+              <p class="text-gray-700">
+                Designing database setup, implementing business logic, and delivering projects on time.
+              </p>
+            </section>
 
-                    <h2 class="text-lg md:text-xl font-bold mb-2">Skill and Tools</h2>
-                    <div class="grid grid-cols-3 gap-4">
-                        <div>
-                            <ol class="pl-4">
-                                <li class="text-base md:text-lg">HTML</li>
-                                <li class="text-base md:text-lg">CSS</li>
-                                <li class="text-base md:text-lg">JavaScript</li>
-                                <li class="text-base md:text-lg">MySQL</li>
-                            </ol>
-                        </div>
-                        <div>
-                            <ol class="pl-4">
-                                <li class="text-base md:text-lg">Laravel</li>
-                                <li class="text-base md:text-lg">Next.js</li>
-                                <li class="text-base md:text-lg">Bootstrap 5</li>
-                            </ol>
-                        </div>
-                        <div>
-                            <ol class="pl-4">
-                                <li class="text-base md:text-lg">Tailwind</li>
-                                <li class="text-base md:text-lg">VS Code</li>
-                                <li class="text-base md:text-lg">Git</li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <hr class="my-5 border-black" />
-
-                    <h2 class="text-lg md:text-xl font-bold mb-2">Experience</h2>
-                    <p><strong>Freelance Web Development</strong> (Jan 2024 - Present)</p>
-                    <p>
-                        Starting conversations to reach an agreement that works for everyone, designing the database setup and
-                        business logic based on the technology we have agreed on, and completing tasks on time as planned
-                        together.
-                    </p>
-
-                    <hr class="my-5 border-black" />
-
-                    <div class="flex flex-col md:flex-row justify-between">
-                        <div class="mb-4 md:mb-0">
-                            <h2 class="text-lg md:text-xl font-bold mb-2">Education & Certifications</h2>
-                            <p class="text-base md:text-lg font-bold">University of Technology Mataram</p>
-                            <p class="text-base md:text-lg px-2">Studying as an IT student</p>
-                            <p class="text-base md:text-lg font-bold">Dicoding Indonesia</p>
-                            <p class="text-base md:text-lg px-2">Belajar Dasar AI</p>
-                            <p class="text-base md:text-lg px-2">Belajar Dasar Pemrogramman JavaScript</p>
-                        </div>
-
-                        <div>
-                            <h2 class="text-lg md:text-xl font-bold mb-2">Everyday Language</h2>
-                            <p class="text-base md:text-lg">Indonesia - Active</p>
-                            <p class="text-base md:text-lg">English - Passive</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <section class="flex flex-col md:flex-row justify-between mb-6">
+              <div>
+                <h2 class="text-xl font-bold mb-2">Education & Certifications</h2>
+                <p class="font-bold">University of Technology Mataram</p>
+                <p class="text-gray-700">IT Student</p>
+                <p class="font-bold">Dicoding Indonesia</p>
+                <ul class="text-gray-700 list-disc list-inside">
+                  <li>Belajar Dasar AI</li>
+                  <li>Belajar Dasar Pemrogramman JavaScript</li>
+                </ul>
+              </div>
+              <div>
+                <h2 class="text-xl font-bold mb-2">Everyday Language</h2>
+                <p>Indonesia - Active</p>
+                <p>English - Passive</p>
+              </div>
+            </section>
+          </div>
         </body>
       </html>
     `);
 
-    const pdfBuffer = await page.pdf({ format: "a4" });
+    // Membuat file PDF
+    const pdfBuffer = await page.pdf({ format: "A4" });
 
-    // Mengembalikan buffer sebagai file PDF dalam response
+    await browser.close();
+
+    // Mengembalikan buffer PDF
     return new Response(pdfBuffer, {
       status: 200,
       headers: {
@@ -108,6 +97,6 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Error generating PDF:", error);
-    return NextResponse.json({ error: "Error: " + error }, { status: 500 });
+    return NextResponse.json({ error: "An error occurred while generating the PDF." }, { status: 500 });
   }
 }
