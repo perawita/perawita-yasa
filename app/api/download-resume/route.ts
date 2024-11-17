@@ -82,7 +82,7 @@ export async function GET() {
     `);
 
     // Membuat file PDF
-    const pdfBuffer = await page.pdf({ format: "A4" });
+    const pdfBuffer = await page.pdf({ format: "a4" });
 
     await browser.close();
 
@@ -96,6 +96,9 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Error generating PDF:", error);
-    return NextResponse.json({ error: "An error occurred while generating the PDF." }, { status: 500 });
+    return NextResponse.json(
+      { error: "An error occurred while generating the PDF." },
+      { status: 500 }
+    );
   }
 }
