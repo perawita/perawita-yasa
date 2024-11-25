@@ -1,0 +1,19 @@
+<Files ".ht*">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+<Directory "/img">
+    Order Deny,Allow
+    Deny from all
+</Directory>
+
+<Directory "/information">
+    Order Deny,Allow
+    Deny from all
+</Directory>
+
+<Directory "/project">
+    Order Deny,Allow
+    Deny from all
+</Directory>

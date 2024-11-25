@@ -1,14 +1,22 @@
 import { NextResponse } from "next/server";
 import puppeteer from "puppeteer";
 
+import path from "path";
+import fs from "fs";
+
 export async function GET() {
   try {
-    const browser = await puppeteer.launch();
+    let pdfBuffer;
 
-    const page = await browser.newPage();
+    if (process.env.NEXT_APP_ENVIRONMENTS === "Development") {
+      const browser = await puppeteer.launch({
+        executablePath: process.env.PUPPETEER_CACHE_DIR,
+      });
 
-    // Konten HTML untuk diubah menjadi PDF
-    await page.setContent(`
+      const page = await browser.newPage();
+
+      // Konten HTML untuk diubah menjadi PDF
+      await page.setContent(`
       <html>
         <head>
           <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -81,10 +89,23 @@ export async function GET() {
       </html>
     `);
 
-    // Membuat file PDF
-    const pdfBuffer = await page.pdf({ format: "a4" });
+      // Membuat file PDF
+      pdfBuffer = await page.pdf({ format: "a4" });
 
-    await browser.close();
+      await browser.close();
+    } else {
+      // Jika bukan di lingkungan Development, ambil file dari public folder
+      const fileName = "perawita-yasa-resume.pdf";
+      const filePath = path.resolve("./public/information", fileName);
+
+      // Cek apakah file ada di public folder
+      if (!fs.existsSync(filePath)) {
+        return NextResponse.json({ error: "File not found" }, { status: 404 });
+      }
+
+      // Baca file dan masukkan ke dalam buffer
+      pdfBuffer = fs.readFileSync(filePath);
+    }
 
     // Mengembalikan buffer PDF
     return new Response(pdfBuffer, {
